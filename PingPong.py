@@ -29,18 +29,17 @@ jugador2.shapesize(stretch_wid=5, stretch_len=1)
 pelota = turtle.Turtle()
 pelota.speed(0)
 pelota.shape("square")
-pelota.color("green")
+pelota.color("white")
 pelota.penup()
 pelota.goto(0, 0)
-pelota.dx = 3
-pelota.dy = 3
+pelota.dx = 2
+pelota.dy = 2
 
 # Red
 red = turtle.Turtle()
 red.color("white")
 red.goto(0, 400)
 red.goto(0, -400)
-
 
 
 # teclas
@@ -72,4 +71,18 @@ ventana.onkeypress(jugador2_down, "Down")
 
 while True:
     ventana.update()
-    
+    pelota.setx(pelota.xcor()+pelota.dx)
+    pelota.sety(pelota.ycor()+pelota.dy)
+    time.sleep(0.01)
+
+    if pelota.ycor() > 290 or pelota.ycor() < -290:  # coliciones en y, rebota
+        pelota.dy *= -1
+    if pelota.xcor() > 390 or pelota.xcor() < -390:  # coliciones ne x, reaparece en el centro
+        pelota.goto(0, 0)
+        pelota.dx *= -1
+    if (pelota.xcor() < -340 and pelota.xcor() > -350 #coliciones pelota-jugador1
+            and (pelota.ycor() < jugador1.ycor() + 50) and (pelota.ycor() > jugador1.ycor()-50)):
+        pelota.dx *= -1
+    if (pelota.xcor() > 340 and pelota.xcor() < 350 #coliciones pelota-jugador2
+            and (pelota.ycor() < jugador2.ycor() + 50) and (pelota.ycor() > jugador2.ycor()-50)):
+        pelota.dx *= -1
